@@ -1,0 +1,8 @@
+imagemodelX_Y.png
+
+X = number of objects in image
+Y = background intensity
+
+-standard deviation of 41 applied to each object's intensity distribution
+-standard deviation of background intensity is 35
+-gaussian lowpass applied (400 pixel radius)
