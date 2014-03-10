@@ -1,2 +1,2 @@
-Biomedical-Optics-Laboratory-Segmentation-Code
+Biomedical Optics Laboratory Segmentation Code
 ==============================================
