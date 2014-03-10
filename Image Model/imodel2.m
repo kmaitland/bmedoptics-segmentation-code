@@ -14,9 +14,44 @@ rb = 'off';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Gaussian
+% Get size of image
+[w,l] = size(I);
+
+% Gaussian Mask
+s = 0.5; 
 G = @(img,x,y,i,j) double(img(x,y))*(1/(2*pi*s^2))*...
     exp(-((x-i)^2+(y-j)^2)/(2*s^2));
+
+% Create empty matrix to store filtered image
+Ig = zeros(w,l);
+
+% Zero-pad matrix
+Ia = padarray(I, [2 2]);
+Ig = padarray(Ig, [2 2]);
+
+% Gaussian filter 5x5 mask
+for n = 3:(w+2)
+    for m = 3:(l+2)
+        Ig(n,m) = (G(Ia,n-2,m-2,n,m) + G(Ia,n-1,m-2,n,m) +...
+            G(Ia,n,m-2,n,m) + G(Ia,n+1,m-2,n,m) + G(Ia,n+2,m-2,n,m) +...
+            G(Ia,n-2,m-1,n,m) + G(Ia,n-1,m-1,n,m) + G(Ia,n,m-1,n,m) +...
+            G(Ia,n+1,m-1,n,m) + G(Ia,n+2,m-1,n,m) + G(Ia,n-2,m,n,m) +...
+            G(Ia,n-1,m,n,m) + G(Ia,n,m,n,m) + G(Ia,n+1,m,n,m) +...
+            G(Ia,n+2,m,n,m) + G(Ia,n-2,m+1,n,m) + G(Ia,n-1,m+1,n,m) +...
+            G(Ia,n,m+1,n,m) + G(Ia,n+1,m+1,n,m) + G(Ia,n+2,m+1,n,m) +...
+            G(Ia,n-2,m+2,n,m) + G(Ia,n-1,m+2,n,m) + G(Ia,n,m+2,n,m) +...
+            G(Ia,n+1,m+2,n,m) + G(Ia,n+2,m+2,n,m));
+    end
+end
+
+% Remove Padding
+Ig = Ig(3:(w+2),3:(l+2));
+
+% Normalization Function
+normalize = @(A) (A - min(A(:)))/(max(A(:)) - min(A(:)));
+
+% Normalize
+Ig = uint8(255*normalize(Ig));
 
 % Create Background
 I = bg*ones(1000,1000)/255;
