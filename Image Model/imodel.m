@@ -7,7 +7,7 @@ close all;
 radius = ones(1,14)*5;
 number = [250];
 % number = [0 4 15 37 53 75 80 83 88 96 93 82 40 5];
-intensity = [58];
+intensity = [260];
 %intensity = [58 70 84 98 113 127 143 ...
 %    157 173 187 203 217 231 244];
 
@@ -48,6 +48,7 @@ end
 obj = uint8(obj);
 figure, imshow(obj);
 
-% Save image
-imwrite(obj,'image_model4.png','png');
+% Save image/matrix
+% imwrite(obj,'image_model.png','png');
+save('imagemodel.mat','obj');
 % Apply noise to each each image using bg distribution

@@ -18,7 +18,9 @@ rb = 'off';
 I = bg*ones(1000,1000)/255;
 
 % Read in Image
-obj = double(imread(['image_model' filename_num '.png']))/255;
+% obj = double(imread(['image_model' filename_num '.png']))/255;
+load('imagemodel.mat');
+obj = double(obj)/255;
 
 % Obtain Centroid for each object
 R = regionprops(logical((obj > 0)),'Centroid');
