@@ -1,5 +1,9 @@
 function [segmented, img_props] = GMRF_seg(I, GMRF_levels, max_size,...
     min_size, eccen, solidity, pathname, filename)
+
+% Convert I to double
+I = double(I);
+
 % GMRF - Runs GMRF segmentation process
 S = anisodiff_med(I, 50, 25, .5,3,1,3);
 % figure, imshow(S);
@@ -26,8 +30,8 @@ Y = double(ismember(L, find(objects)));
 
 % Get object properties
 L = bwlabel(Y);
-B = regionprops(L, I*255, 'All');
-B2 = bg_finder(Y, I*255, B);
+B = regionprops(L, I, 'All');
+B2 = bg_finder(Y, I, B);
 object_props = [(0.5625*[B.Area])', [B.Eccentricity]', [B.Extent]',...
     [B.Solidity]', ([B.MeanIntensity])',...
     ((([B.MaxIntensity]-[B.MinIntensity])/4))',...
@@ -39,13 +43,17 @@ load('GMRFnet'); % Import pretrained network
 classified = net(object_props');
 output = zeros(size(L));
 for i=1:length(classified)
-    if (classified(i) >= 0.25)
+    if (classified(i) >= 0.5)
+        disp(classified(i));
         output = double(L == i) + output;
     end
 end
 
 L = bwlabel(output);
 img_props = regionprops(L, 'all');
+
+% Convert I back to uint8
+I = uint8(I);
 
 BWoutline = bwperim(output);
 Segout_R = I; Segout_R(BWoutline) = 255;
