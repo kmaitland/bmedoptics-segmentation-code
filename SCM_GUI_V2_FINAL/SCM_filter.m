@@ -2,6 +2,7 @@ function [S_new] = SCM_filter(S)
 
 [width, height] = size(S);
 
+% Median filter the image
 S = medfilt2(S);
 
 % Step 1 - Initialize Parameters
@@ -34,16 +35,10 @@ for n = 1:num
     if n ~= 1
         T = T + n.*double(T == 0).*Y;
     end
-    
-    % figure, imshow(Y);
-    % imwrite(Y, [num2str(n) '_a.png'], 'png');
 end
 
 % Erase pixels that with no values in the time matrix
 S_new = (~(T == 0)).*S;
-
-% Write Time Matrix
-% imwrite(T./4, 'T.png', 'png');
 
 % Lower intensities of saturated bright areas that cannot be nuclei
 dark = double(T == 2);
@@ -52,7 +47,6 @@ L = bwlabel(dark);
 B = regionprops(L,'Area');
 objects = ([B.Area] > 220);
 bright = ismember(L, find(objects));
-% imwrite(bright, 'bright.png', 'png');
 
 % Look for dark spots with potential to be nuclei
 dark = double(T == 3 | T == 4 | T == 5 | T == 6);
@@ -68,13 +62,11 @@ L = bwlabel(dark);
 B = regionprops(L,'Eccentricity');
 objects = ([B.Eccentricity] < 0.75);
 dark = ismember(L, find(objects));
-% imwrite(dark, 'dark.png', 'png');
  
 % Darken/Brighted those spots
 mask = double(bright).*double(T==2);
 mask2 = double(dark).*double(T == 3 | T == 4 | T == 5 | T == 6);
 S_new = S_new.*double(~mask) + (S_new.^2).*double(mask);
 S_new = S_new.*double(~mask2) + (S_new.^0.5).*double(mask2);
-% imwrite(S_new, 'S_new.png', 'png');
 
 end
