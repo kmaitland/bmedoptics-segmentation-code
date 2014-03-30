@@ -35,8 +35,8 @@ mo = uint8(filled_mask) + uint8(filled_mask2);
 
 % Display Overlap
 green = (mo == 2); % Image overlap
-blue = filled_mask - green; % Image 1 non-overlap
-red = filled_mask2 - green;% Image 2 non-overlap
+ = filled_mask - green; % Image 1 non-overlap
+blue = filled_mask2 - green;% Image 2 non-overlap
 output = cat(3, red, green, blue);
 figure, imshow(output, []);
 
