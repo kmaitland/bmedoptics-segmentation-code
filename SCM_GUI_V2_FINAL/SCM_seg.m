@@ -252,8 +252,6 @@ if ~strcmp(handles.img{1}, 'null') && ~strcmp(handles.img{1}, 'segmented')
         Segout_B = I_crop; Segout_B(BWoutline) = 0;
         if get(handles.checkbox4,'Value')
             BGoutline = bwperim(d_mask);
-            Segout_R(BGoutline) = 0;
-            Segout_G(BGoutline) = 0;
             Segout_B(BGoutline) = 255;
         end
         handles.seg{n} = cat(3, Segout_R, Segout_G, Segout_B);

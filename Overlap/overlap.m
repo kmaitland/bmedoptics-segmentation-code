@@ -21,14 +21,17 @@ I2 = imcrop(imread([pathname2 filename2]), [1 1 999 999]);
 r = I(:,:,1);
 g = I(:,:,2);
 b = I(:,:,3);
-mask = (g < 90) & (b < 90) & (r > 110);
+mask = (g < 90) & (r > 110);
 filled_mask = imfill(mask, 'holes');
 % Program
 r2 = I2(:,:,1);
 g2 = I2(:,:,2);
 b2 = I2(:,:,3);
-mask2 = (g2 < 90) & (b2 < 90) & (r2 > 110);
+mask2 = (g2 < 90) & (r2 > 110);
 filled_mask2 = imfill(mask2, 'holes');
+
+% Get FOV mask
+FOV_mask = imfill(((b > 110) | (b2 > 110)),'holes');
 
 % Find Overlap
 mo = uint8(filled_mask) + uint8(filled_mask2);
@@ -100,4 +103,5 @@ disp(['# of Non-overlapping image2 objects (blue) = ' num2str(num_blue)]);
 disp('Total Area (in pixels) of: '); 
 disp(['Overlapping objects (green) = ' num2str(sum(area3))]);
 disp(['Non-overlapping image1 objects (red) = ' num2str(sum(area2))]);
-disp(['Non-overlapping image2 objects (blue)= ' num2str(sum(area1))]);
+disp(['Non-overlapping image2 objects (blue) = ' num2str(sum(area1))]);
+disp(['Active FOV area = ' num2str(sum(sum(FOV_mask)))]);
