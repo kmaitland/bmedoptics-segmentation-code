@@ -4,11 +4,11 @@ close all;
 
 % Get Kristen's File
 [filename, pathname, ~] = uigetfile({'*.png';'*.jpg';...
-    '*.bmp';'*.tif;*.tiff';}, 'Image 1');
+    '*.bmp';'*.tif;*.tiff';}, 'Standard Image');
 
 % Get Program File
 [filename2, pathname2, ~] = uigetfile({'*.png';'*.jpg';...
-    '*.bmp';'*.tif;*.tiff';}, 'Image 2');
+    '*.bmp';'*.tif;*.tiff';}, 'Image to Compare');
 
 % File Number
 fn = 8;
@@ -97,11 +97,12 @@ csvwrite('overlap.csv',area3');
 num_green = max(max(bwlabel(green)));
 
 % Display stuff
-disp(['# of Overlapping objects (green) = ' num2str(num_green)]);
-disp(['# of Non-overlapping image1 objects (red) = ' num2str(num_red)]);
-disp(['# of Non-overlapping image2 objects (blue) = ' num2str(num_blue)]);
+disp(['True Positives (green) = ' num2str(num_green)]);
+disp(['False Negatives (blue) = ' num2str(num_blue)]);
+disp(['False Positives (red) = ' num2str(num_red)]);
+
 disp('Total Area (in pixels) of: '); 
-disp(['Overlapping objects (green) = ' num2str(sum(area3))]);
-disp(['Non-overlapping image1 objects (red) = ' num2str(sum(area2))]);
-disp(['Non-overlapping image2 objects (blue) = ' num2str(sum(area1))]);
+disp(['True Positives (green) = ' num2str(sum(area3))]);
+disp(['False Negatives (blue) = ' num2str(sum(area1))]);
+disp(['False Positives (red) = ' num2str(sum(area2))]);
 disp(['Active FOV area = ' num2str(sum(sum(FOV_mask)))]);
