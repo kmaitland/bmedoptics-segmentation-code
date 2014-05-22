@@ -7,7 +7,7 @@ bg = 50;
 noisefg = (5)^2; % Variance; foreground
 noisebg = (35/255)^2; % Variance; background
 
-filename_num = '250_test';
+filename_num = '250_test_o';
 
 % Turn on red border
 rb = 'off';
@@ -20,7 +20,7 @@ I = bg*ones(1000,1000)/255;
 % Read in Image
 % obj = double(imread(['image_model' filename_num '.png']))/255;
 load('imagemodel.mat');
-obj = double(obj)/255;
+obj = double(obj);
 
 % Obtain Centroid for each object
 R = regionprops(logical((obj > 0)),'Centroid');
@@ -50,10 +50,10 @@ end
 normalize = @(A) (A - min(A(:)))/(max(A(:)) - min(A(:)));
 
 % Normalize
-Ig = uint16(255*normalize(Ig));
+Ig = normalize(Ig);
 
 % Convolute Gaussian on Center Mask; Limit objects to mask size
-obj = double((obj > 0).*conv2(Center_mask,Ig,'same'))/255;
+obj = double((obj > 0).*conv2(Center_mask,Ig,'same'));
 % figure, imshow(obj);
 
 % Separate bg from objects
@@ -61,7 +61,7 @@ obj_mask = obj > 0;
 % figure, imshow(obj_mask);
 
 % Apply noise to bg separately
-I = imnoise(I,'gaussian',0,noisebg);
+I = imnoise(I,'gaussian',0,noisebg)*255;
 % figure, imshow(I,[]);
 
 % Recombine bg and objects
@@ -80,4 +80,4 @@ end
 % figure, imshow(uint16(I*255),[]);
 
 % Write image to disk
-imwrite(uint16(I*255),['image_model' filename_num '_' num2str(bg)  '.png'],'png');
+imwrite(uint16(I),['image_model' filename_num '_' num2str(bg)  '.png'],'png');
