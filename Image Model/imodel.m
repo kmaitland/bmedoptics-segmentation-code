@@ -5,11 +5,9 @@ close all;
 
 % Parameters
 radius = ones(1,14)*5;
-number = [250];
-% number = [0 4 15 37 53 75 80 83 88 96 93 82 40 5];
-intensity = [260];
-%intensity = [58 70 84 98 113 127 143 ...
-%    157 173 187 203 217 231 244];
+number = [1 5 12 18 25 27 28 29 32 31 27 13 2];
+intensity = [118 141 165 188 212 ...
+    235 259 282 306 329 353 376 400];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,8 +43,8 @@ for n=1:length(number)
 end
  
 % Display Object
-obj = uint8(obj);
-figure, imshow(obj);
+obj = uint16(obj);
+figure, imshow(obj,[]);
 
 % Save image/matrix
 % imwrite(obj,'image_model.png','png');
