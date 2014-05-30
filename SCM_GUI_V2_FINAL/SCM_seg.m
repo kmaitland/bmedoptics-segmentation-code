@@ -22,7 +22,7 @@ function varargout = SCM_seg(varargin)
 
 % Edit the above text to modify the response to help SCM_seg
 
-% Last Modified by GUIDE v2.5 28-Oct-2013 01:31:22
+% Last Modified by GUIDE v2.5 29-May-2014 20:52:45
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -67,7 +67,7 @@ handles.pathname = 0;
 handles.num = 0;
 handles.B = 0;
 
-% Inititalize SCM Filter Settings
+% Get String Value and convert to double
 handles.gsv =@(x) str2double(get(x,'String'));
 
 % Get centroid function
@@ -220,6 +220,7 @@ if ~strcmp(handles.img{1}, 'null') && ~strcmp(handles.img{1}, 'segmented')
     handles.eccentricity = handles.gsv(handles.edit9);
     handles.solidity = handles.gsv(handles.edit11);
     handles.rb = handles.gsv(handles.edit16);
+    handles.lateralres = handles.gsv(handles.edit17);
     
     for n=1:handles.num
         % Segmentation
@@ -239,7 +240,7 @@ if ~strcmp(handles.img{1}, 'null') && ~strcmp(handles.img{1}, 'segmented')
         [filter_img, I_crop] = SCM(I, w, l,...
             handles.maxarea, handles.minarea,...
             handles.eccentricity, handles.solidity, 'Y',...
-            d_mask, cut_mask, handles.listbox2);
+            d_mask, cut_mask, handles.lateralres, handles.listbox2);
                 
         % Update variables to figure
         set(handles.listbox2,'Value', length(cmdwinout()));
@@ -270,7 +271,7 @@ if ~strcmp(handles.img{1}, 'null') && ~strcmp(handles.img{1}, 'segmented')
         handles.centroid{n} = prop;
         
         % Get area and sd area for each object
-        raw_area{n} = (0.5625*[prop.Area])';
+        raw_area{n} = (handles.lateralres*[prop.Area])';
         
         % Get intensity and sd intensity for each object
         obj_intensity{n} = ([prop.MeanIntensity])';
@@ -284,8 +285,8 @@ if ~strcmp(handles.img{1}, 'null') && ~strcmp(handles.img{1}, 'segmented')
         % Get NCR, # of obj, mean area, sd area, mean eccen, sd eccen
         NCR(n+1) = sum([prop.Area])/(bg_area - sum([prop.Area]));
         numberofobjects(n+1) = length((1:size(prop)));
-        mean_area(n+1) = 0.5625*mean([prop.Area]);
-        std_area(n+1) = 0.5625*std([prop.Area]);
+        mean_area(n+1) = handles.lateralres*mean([prop.Area]);
+        std_area(n+1) = handles.lateralres*std([prop.Area]);
         mean_eccentricity(n+1) = mean([prop.Eccentricity]);
         std_eccentricity(n+1) = std([prop.Eccentricity]);
 
@@ -674,3 +675,24 @@ function listbox2_Callback(hObject, eventdata, handles)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns listbox2 contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from listbox2
+
+function edit17_Callback(hObject, eventdata, handles)
+% hObject    handle to edit17 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit17 as text
+%        str2double(get(hObject,'String')) returns contents of edit17 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit17_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit17 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end

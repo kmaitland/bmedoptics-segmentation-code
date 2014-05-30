@@ -1,5 +1,5 @@
 function [output, I] = SCM(I, width, height, max_area, min_area,...
-    eccen_limit, ap_min, bg_kill, d_mask, cut_mask, lb)
+    eccen_limit, ap_min, bg_kill, d_mask, cut_mask, lr, lb)
 
 % Created by: Andrew Van (2012)
 
@@ -8,7 +8,7 @@ S = I;
 for n=1:3
     S = SCM_filter(S);
 end
-imwrite(S,'SCM_filter.png','png');
+% imwrite(S,'SCM_filter.png','png');
 
 % Apply SCM to get Time Matrix 
 S = medfilt2(S); % Median Filter
@@ -46,7 +46,7 @@ for n = 1:num
 end
 
 % Write Time Matrix
-imwrite(T./max(T(:)), 'TimeMatrix.png', 'png');
+% imwrite(T./max(T(:)), 'TimeMatrix.png', 'png');
 
 % Search Time Matrix and Find Possible Nuclei
 N = max(T(:)); % Store Max value of Time Matrix
@@ -67,7 +67,7 @@ for i = 1:N
     S(N == 1) = 1;
 end
 % Mask output from regional maxima of time matrix
-imwrite(S, 'Mask.png', 'png'); 
+% imwrite(S, 'Mask.png', 'png'); 
 
 if bg_kill == 'Y'
     disp('#DELETING BACKGROUND');
@@ -104,14 +104,15 @@ B = regionprops(L,'Solidity');
 objects = ([B.Solidity] > ap_min);
 output = double(ismember(L, find(objects)));
 % figure, imshow(Y);
-imwrite(Y, 'geometricfilter.png', 'png');
+% imwrite(Y, 'geometricfilter.png', 'png');
 % figure, imshow(output);
 
 % Get object properties
 L = bwlabel(output);
 B = regionprops(L, I*255, 'All');
 B2 = bg_finder(output, I*255, B);
-object_props = [(0.5625*[B.Area])', [B.Eccentricity]', [B.Extent]',...
+object_props = [(lr*[B.Area])',...
+    [B.Eccentricity]', [B.Extent]',...
     [B.Solidity]', ([B.MeanIntensity])',...
     ((([B.MaxIntensity]-[B.MinIntensity])/4))',...
     ([B2.MeanIntensity])',...
@@ -128,5 +129,5 @@ for i=1:length(classified)
 end
 
 % Write output image to disk
-imwrite(output,'output.png','png');
+% imwrite(output,'output.png','png');
 end
