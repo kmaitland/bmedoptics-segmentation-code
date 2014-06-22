@@ -221,7 +221,7 @@ if ~strcmp(handles.img{1}, 'null') && ~strcmp(handles.img{1}, 'segmented')
     handles.solidity = handles.gsv(handles.edit11);
     handles.rb = handles.gsv(handles.edit16);
     handles.lateralres = handles.gsv(handles.edit17);
-    handles.res = handles.gsv(handles.edit18);
+    handles.res = (handles.gsv(handles.edit18)).^2;
     
     for n=1:handles.num
         % Segmentation
