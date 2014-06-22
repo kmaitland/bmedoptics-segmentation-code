@@ -22,7 +22,7 @@ function varargout = SCM_seg(varargin)
 
 % Edit the above text to modify the response to help SCM_seg
 
-% Last Modified by GUIDE v2.5 29-May-2014 20:52:45
+% Last Modified by GUIDE v2.5 19-Jun-2014 12:20:06
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -221,6 +221,7 @@ if ~strcmp(handles.img{1}, 'null') && ~strcmp(handles.img{1}, 'segmented')
     handles.solidity = handles.gsv(handles.edit11);
     handles.rb = handles.gsv(handles.edit16);
     handles.lateralres = handles.gsv(handles.edit17);
+    handles.res = handles.gsv(handles.edit18);
     
     for n=1:handles.num
         % Segmentation
@@ -303,10 +304,10 @@ if ~strcmp(handles.img{1}, 'null') && ~strcmp(handles.img{1}, 'segmented')
         if get(handles.checkbox1,'Value')
             if ispc()
                 imwrite(handles.seg{n}, [savedirectory '\seg_' name...
-                '.png' ], 'png');
+                '.tif' ], 'tif', 'Resolution', [handles.res handles.res]);
             else
                 imwrite(handles.seg{n}, [savedirectory '/seg_' name...
-                '.png' ], 'png');
+                '.tif' ], 'tif', 'Resolution', [handles.res handles.res]);
             end
         end
             
@@ -688,6 +689,29 @@ function edit17_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function edit17_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to edit17 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit18_Callback(hObject, eventdata, handles)
+% hObject    handle to edit18 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit18 as text
+%        str2double(get(hObject,'String')) returns contents of edit18 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit18_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit18 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 

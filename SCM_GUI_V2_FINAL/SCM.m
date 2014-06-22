@@ -104,7 +104,7 @@ B = regionprops(L,'Solidity');
 objects = ([B.Solidity] > ap_min);
 output = double(ismember(L, find(objects)));
 % figure, imshow(Y);
-% imwrite(Y, 'geometricfilter.png', 'png');
+% imwrite(output, 'geometricfilter.png', 'png');
 % figure, imshow(output);
 
 % Get object properties
