@@ -92,7 +92,6 @@ for n=1:max(max(bwlabel(green)))
 end
 csvwrite('overlap.csv',area3');
 
-
 % Count # of overlapping objects
 num_green = max(max(bwlabel(green)));
 
@@ -103,6 +102,8 @@ disp(['False Positives (red) = ' num2str(num_red)]);
 
 disp('Total Area (in pixels) of: '); 
 disp(['True Positives (green) = ' num2str(sum(area3))]);
-disp(['False Negatives (blue) = ' num2str(sum(area1))]);
-disp(['False Positives (red) = ' num2str(sum(area2))]);
+%disp(['False Negatives (blue) = ' num2str(sum(area1))]);
+disp(['False Negatives (blue) = ' num2str(sum(sum(blue)))]);
+%disp(['False Positives (red) = ' num2str(sum(area2))]);
+disp(['False Positives (red) = ' num2str(sum(sum(red)))]);
 disp(['Active FOV area = ' num2str(sum(sum(FOV_mask)))]);
