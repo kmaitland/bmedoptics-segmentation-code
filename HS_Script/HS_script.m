@@ -7,6 +7,9 @@ close all;
 % Erode by one pixel
 erode = 'N';
 
+% Enable/Disable background remover
+bgr = 'Y';
+
 % Show Figure
 show_fig = 'N';
 
@@ -46,6 +49,7 @@ if ~isequal(filename, 0)
     sd_obj_intensity = cell(1, num);
     bg_intensity = cell(1, num);
     sd_bg_intensity = cell(1, num);
+    NCR = zeros(1, num);
     area = zeros(1, num);
     area_sd = zeros(1, num);
     eccen = zeros(1, num);
@@ -61,6 +65,14 @@ if ~isequal(filename, 0)
         disp([name{n} ':']);
         [mask{n-1}, img_props] = create_mask(img{n-1}, oimg{n-1},...
             erode, show_fig);
+        
+        if strcmp(bgr,'N')
+            bg_area = sum(sum(double((~mask{n-1}))));
+        else
+            [~, bg_area, ~] = bg_remove(oimg{n-1});
+            bg_area = bg_area - sum(sum(double(mask{n-1})));
+        end
+        
         % Get background by dilating nuclei a few pixels out; do for each
         % individual object
         labeled_mask = bwlabel(mask{n-1});
@@ -98,6 +110,7 @@ if ~isequal(filename, 0)
         eccen(n) = mean([img_props.Eccentricity]);
         eccen_sd(n) = std([img_props.Eccentricity]);
         objects(n) = length((1:size(img_props)));
+        NCR(n) = area(n)/(0.5625*bg_area);
         disp([num2str(area(n)), ' ', num2str(area_sd(n))]);
         disp([num2str(eccen(n)), ' ', num2str(eccen_sd(n))]);
         disp([num2str(objects(n))]);
@@ -118,12 +131,14 @@ if ~isequal(filename, 0)
     end
     % Check if using PC
     if ispc()
+        NCR = num2cell(NCR);
         area = num2cell(area);
         area_sd = num2cell(area_sd);
         eccen = num2cell(eccen);
         eccen_sd = num2cell(eccen_sd);
         objects = num2cell(objects);
     else
+        NCR = cellstr(num2str(NCR'))';
         area = cellstr(num2str(area'))';
         area_sd = cellstr(num2str(area_sd'))';
         eccen = cellstr(num2str(eccen'))';
@@ -132,6 +147,7 @@ if ~isequal(filename, 0)
     end
     
     nameoffiles{1} = 'Image';
+    NCR{1} = 'NCR';
     area{1} = 'Average Area';
     area_sd{1} = 'SD Area';
     eccen{1} = 'Average Eccentricity';
@@ -139,7 +155,8 @@ if ~isequal(filename, 0)
     objects{1} = '# of Objects';
     
     % Excel Data Table
-    A = [(name)',(area)',(area_sd)',(eccen)',(eccen_sd)',(objects)'];
+    A = [(name)', (NCR)', (area)',(area_sd)',...
+        (eccen)',(eccen_sd)',(objects)'];
 
     % Create Empty Cell
     B = {};
@@ -185,7 +202,6 @@ if ~isequal(filename, 0)
 
         fclose(fid); 
     end
-    
     
 else 
     disp('No Files Selected!');
