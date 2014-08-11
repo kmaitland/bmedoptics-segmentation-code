@@ -31,7 +31,8 @@ mask2 = (g2 < 90) & (r2 > 110);
 filled_mask2 = imfill(mask2, 'holes');
 
 % Get FOV mask
-FOV_mask = imfill(((b > 110) | (b2 > 110)),'holes');
+FOV_mask = imfill((((g < 90) & (b > 110)) | ((g2 < 90) & (b2 > 110))),...
+    'holes');
 
 % Find Overlap
 mo = uint8(filled_mask) + uint8(filled_mask2);

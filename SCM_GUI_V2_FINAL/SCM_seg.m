@@ -254,6 +254,10 @@ if ~strcmp(handles.img{1}, 'null') && ~strcmp(handles.img{1}, 'segmented')
         Segout_B = I_crop; Segout_B(BWoutline) = 0;
         if get(handles.checkbox4,'Value')
             BGoutline = bwperim(d_mask);
+            % Subtract where border objects intersect
+            intersect = (double(BGoutline) - double(BWoutline)) == 1;
+            Segout_R(intersect) = 0;
+            Segout_G(BGoutline) = 0;
             Segout_B(BGoutline) = 255;
         end
         handles.seg{n} = cat(3, Segout_R, Segout_G, Segout_B);
@@ -284,6 +288,7 @@ if ~strcmp(handles.img{1}, 'null') && ~strcmp(handles.img{1}, 'segmented')
             -[prop2.MinIntensity])'/4);
         
         % Get NCR, # of obj, mean area, sd area, mean eccen, sd eccen
+        bg_area
         NCR(n+1) = sum([prop.Area])/(bg_area - sum([prop.Area]));
         numberofobjects(n+1) = length((1:size(prop)));
         mean_area(n+1) = handles.lateralres*mean([prop.Area]);

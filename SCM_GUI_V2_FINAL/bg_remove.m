@@ -2,7 +2,7 @@ function [output, bg_area, mask] = bg_remove(input, lb)
 % Background Remover
 %   Removes Background from Image
 
-disp('#REMOVING BACKGROUND')
+%disp('#REMOVING BACKGROUND')
 set(lb, 'String', cmdwinout());
 
 % [w l] = size(input);
@@ -23,10 +23,6 @@ smallholes = holes & ~bigholes;
 mask = mask|smallholes;
 % figure, imshow(mask), title('Mask');
 
-% Calculate 'Real Image Area'
-mask_props = regionprops(imcomplement(mask), 'Area');
-bg_area = sum([mask_props.Area]);
-
 % Set Selected Region to 0
 input(mask == 1) = 0;
 
@@ -34,5 +30,10 @@ input(mask == 1) = 0;
 output = input;
 mask = imcomplement(mask);
 % figure, imshow(output), title('Output');
+
+% Calculate 'Real Image Area'
+bordered_mask = bwperim(mask); % For consistency
+mask = imfill(bordered_mask,'holes'); % For consistency
+bg_area = nnz(mask);
 
 end
