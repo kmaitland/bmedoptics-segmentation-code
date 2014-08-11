@@ -6,7 +6,7 @@ function [filled_mask, img_props] = create_mask(img, oimg, erode, show_fig)
 r = img(:,:,1);
 g = img(:,:,2);
 b = img(:,:,3);
-mask = (g < 90) & (b < 90) & (r > 110);
+mask = (g < 90) & (r > 110);
 filled_mask = imfill(mask, 'holes');
 if erode == 'Y'
     se = strel('disk', 1, 8);
