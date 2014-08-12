@@ -288,9 +288,8 @@ if ~strcmp(handles.img{1}, 'null') && ~strcmp(handles.img{1}, 'segmented')
             -[prop2.MinIntensity])'/4);
         
         % Get NCR, # of obj, mean area, sd area, mean eccen, sd eccen
-        bg_area
         NCR(n+1) = sum([prop.Area])/(bg_area - sum([prop.Area]));
-        numberofobjects(n+1) = length((1:size(prop)));
+        numberofobjects(n+1) = length(prop);
         mean_area(n+1) = handles.lateralres*mean([prop.Area]);
         std_area(n+1) = handles.lateralres*std([prop.Area]);
         mean_eccentricity(n+1) = mean([prop.Eccentricity]);
