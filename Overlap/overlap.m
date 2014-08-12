@@ -94,7 +94,7 @@ end
 csvwrite('overlap.csv',area3');
 
 % Count # of overlapping objects
-num_green = (max(max(bwlabel(filled_mask)))-num_blue);
+num_green = (max(max(bwlabel(filled_mask2)))-num_red);
 
 % Display stuff
 disp(['True Positives (green) = ' num2str(num_green)]);

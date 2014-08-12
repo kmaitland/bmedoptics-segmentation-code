@@ -61,7 +61,7 @@ if ~isequal(filename, 0)
         area_sd(n) = 0.5625*std([img_props.Area]);
         eccen(n) = mean([img_props.Eccentricity]);
         eccen_sd(n) = std([img_props.Eccentricity]);
-        objects(n) = length((1:size(img_props)));
+        objects(n) = length(img_props);
         disp([num2str(area(n)), ' ', num2str(area_sd(n))]);
         disp([num2str(eccen(n)), ' ', num2str(eccen_sd(n))]);
         disp(num2str(objects(n)));

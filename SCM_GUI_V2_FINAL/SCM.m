@@ -129,5 +129,5 @@ for i=1:length(classified)
 end
 
 % Write output image to disk
-imwrite(output,'output.png','png');
+% imwrite(output,'output.png','png');
 end
