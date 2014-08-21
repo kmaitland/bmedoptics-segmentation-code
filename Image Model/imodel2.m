@@ -79,5 +79,8 @@ end
 % Display Images
 figure, imshow(uint16(I*255),[]);
 
+% Convert to rgb
+I = cat(3,I,I,I);
+
 % Write image to disk
 imwrite(uint16(I),['image_model' filename_num '_' num2str(bg)  '.png'],'png');
