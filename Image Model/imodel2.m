@@ -10,7 +10,7 @@ noisebg = (35/255)^2; % Variance; background
 filename_num = 'test'; % Filename to Save
 
 % Turn on red border (on/off)
-rb = 'on';
+rb = 'off';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -74,13 +74,13 @@ if strcmp(rb,'on')
     Segout_G = I; Segout_G(BWoutline) = 0;
     Segout_B = I; Segout_B(BWoutline) = 0;
     I = cat(3, Segout_R, Segout_G, Segout_B);
+else
+    % Convert to rgb
+    I = cat(3,I,I,I);
 end
     
 % Display Images
 figure, imshow(uint16(I*255),[]);
-
-% Convert to rgb
-I = cat(3,I,I,I);
 
 % Write image to disk
 imwrite(uint16(I),['image_model' filename_num '_' num2str(bg)  '.png'],'png');
