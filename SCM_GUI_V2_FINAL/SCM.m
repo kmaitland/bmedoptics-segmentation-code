@@ -46,7 +46,7 @@ for n = 1:num
 end
 
 % Write Time Matrix
-% imwrite(T./max(T(:)), 'TimeMatrix.png', 'png');
+imwrite(T./max(T(:)), 'TimeMatrix.png', 'png');
 
 % Search Time Matrix and Find Possible Nuclei
 N = max(T(:)); % Store Max value of Time Matrix
@@ -67,7 +67,7 @@ for i = 1:N
     S(N == 1) = 1;
 end
 % Mask output from regional maxima of time matrix
-% imwrite(S, 'Mask.png', 'png'); 
+imwrite(S, 'Mask.png', 'png'); 
 
 if bg_kill == 'Y'
     disp('#DELETING BACKGROUND');
@@ -129,5 +129,5 @@ for i=1:length(classified)
 end
 
 % Write output image to disk
-% imwrite(output,'output.png','png');
+imwrite(output,'output.png','png');
 end
