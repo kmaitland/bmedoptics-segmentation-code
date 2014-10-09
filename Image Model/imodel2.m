@@ -10,7 +10,7 @@ noisebg = (35/255)^2; % Variance; background
 filename_num = 'test'; % Filename to Save
 
 % Turn on red border (on/off)
-rb = 'off';
+rb = 'on';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -80,7 +80,7 @@ else
 end
     
 % Display Images
-figure, imshow(uint16(I*255),[]);
+figure, imshow(uint16(I*255));
 
 % Write image to disk
 imwrite(uint16(I),['image_model' filename_num '_' num2str(bg)  '.png'],'png');
