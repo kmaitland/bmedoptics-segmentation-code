@@ -13,9 +13,13 @@ close all;
 % File Number
 fn = 8;
 
+% Read in Images
+I = imread([pathname filename]);
+I2 = imread([pathname2 filename2]);
+
 % Cropping Functions
-%I = imcrop(imread([pathname filename]),[1 1 999 999]);
-%I2 = imcrop(imread([pathname2 filename2]), [1 1 999 999]);
+%I = imcrop(I,[1 1 999 999]);
+%I2 = imcrop(I2, [1 1 999 999]);
 
 % Get Mask
 % Kristen
