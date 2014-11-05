@@ -4,11 +4,17 @@ close all;
 %rng default; % Keeps randomizer the same through each program run
 
 % Parameters
-radius = ones(1,14)*5;
+% Objects are created by bins, defined by 3 parameter vectors: radius, number, and intensity
+% radius is a vector that defines the size of the image model objects 
+% number is a vector that defines the number of objects in each bin
+% intensity is a vector that defines the pixel value for each bin
+% When setting parameters: vectors must be the same size
+radius = ones(1,14)*5; 
 number = [1 5 12 18 25 27 28 29 32 31 27 13 2];
 intensity = [118 141 165 188 212 ...
     235 259 282 306 329 353 376 400];
 
+% Below this line should not be edited unless you know what you are doing
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Create empty matrix 
