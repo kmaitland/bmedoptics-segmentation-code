@@ -4,13 +4,13 @@ close all;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Erode by one pixel
+% Erodes segmentation mask by one pixel ('Y' or 'N')
 erode = 'N';
 
-% Enable/Disable background remover
+% Enable/Disable background remover ('Y' or 'N', enables/disables the background remover function)
 bgr = 'Y';
 
-% Show Figure
+% Show Figure ('Y' or 'N', outputs figure of the segmented image)
 show_fig = 'N';
 
 % Excel Filename
