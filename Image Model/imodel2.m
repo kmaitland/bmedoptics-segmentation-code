@@ -4,14 +4,15 @@ close all;
 
 % Parameters
 bg = 50; % Average Background Intensity
-noisefg = (3.97)^2; % Variance; foreground
-noisebg = (35/255)^2; % Variance; background
+noisefg = (3.97)^2; % Variance; foreground (This is spatial variance, not intensity variance)
+noisebg = (35/255)^2; % Variance; background (This is intensity variance)
 
 filename_num = 'test'; % Filename to Save
 
-% Turn on red border (on/off)
+% Turn on red border (on/off) (Adds red border to objects)
 rb = 'on';
 
+% NO EDITS BELOW THIS LINE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Create Background
