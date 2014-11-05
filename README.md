@@ -33,4 +33,4 @@ SCM segmentation algorithm. Use SCM_seg.m
 
 ###Training Images
 
-Training image at 4 depths
+Training images at 4 depths
