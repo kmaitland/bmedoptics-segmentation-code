@@ -21,7 +21,7 @@ Outputs segmentation analysis for given image. Use HS_script.
 
 ###Image Model
 
-Image model generator. Use imodel.m to generate initial model. Use imodel2 to add contrast and noise. The image model generates a "8-bit" image in a 16-bit container, so output may not be visible to the user (This allows for pixel values greater than 255).
+Image model generator. Use imodel.m to generate initial model, this creates a *.mat file that is used by imodel2.m. Use imodel2 to add contrast and noise, you must have a *.mat file generated or the script will fail. The image model generates a "8-bit" image in a 16-bit container, so output may not be visible to the user (This allows for pixel values greater than 255).
 
 ###Overlap
 
